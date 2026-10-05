@@ -10,11 +10,13 @@ Executed 5 October 2026. These results come from this edition's current source a
 | WebKit checks             | 16 passed                       | Modal controls, local worker, policy capability, support export, layout and edition UI; enabled Safari extension runtime is separate                                                    |
 | Provider catalog          | 30 services / 46 exact hosts    | Installed native-send guards checked on one controlled host fixture per service, not authenticated live service certification                                                           |
 | Firefox package lint      | 0 errors, 0 notices, 0 warnings | Generated Manifest V3 package and bundled runtime                                                                                                                                       |
-| Firefox runtime           | Not verified on this host       | Included Linux CI is configured to run Firefox UI tests; first remote run remains pending                                                                                               |
+| Firefox UI                | 16 passed in Linux CI           | Local workspace, worker, modal and policy checks; installed Firefox extension runtime remains separate                                                                                  |
 | Safari native project     | Build succeeded unsigned        | Generated distinct app/extension identity; macOS Debug compile with CODE_SIGNING_ALLOWED=NO                                                                                             |
 | Browser/source ZIP checks | Passed                          | Edition names/versions, permission scope, MIT/Apache notices, source allowlist, matching generated files and SHA-256 checksums                                                          |
 
 Browser checks were split into the UI group (Chromium and WebKit) and installed extension group (Chromium). 39 browser checks passed in total. Public-specific checks prove that advanced JSON controls are absent, curated provider choices persist, unsupported managed policy fails closed and stored/saved custom hosts or label hints are rejected. Generated host permissions match only the 46 curated hosts.
+
+[GitHub Actions on Ubuntu 24.04](https://github.com/Wagner-A-S/ai-leak-guard-public/actions/runs/37282882166) passed the full verification workflow: 301 Node tests, 55 browser checks, Firefox package lint and release integrity. The 14 browser skips are the seven Chromium-only installed-extension cases in each of Firefox/WebKit.
 
 Corpus success measures agreement with saved synthetic/reserved/sandbox fixtures, not real-world detection accuracy. Phone metadata covers 245 regions; the fixture corpus exercises a subset of real numbering formats. No real employee/customer database is included.
 
