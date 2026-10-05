@@ -1,0 +1,21 @@
+# The deterministic synthetic corpus is part of the application.
+!data/
+!data/**
+# Recreated offline from reviewed recipes during npm ci; still bundled in releases.
+/data/positives.json
+node_modules/
+dist/
+releases/
+safari/
+test-results/
+playwright-report/
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+.DS_Store
+Thumbs.db

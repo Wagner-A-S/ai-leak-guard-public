@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Leak Guard Public · Personal settings</title>
+    <link rel="icon" href="../../assets/mark.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-edition="public">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="admin.html" aria-label="AI Leak Guard Public"
+          ><img src="../../assets/mark.svg" alt="" /><span
+            >Leak Guard<small>PUBLIC · OPEN SOURCE</small></span
+          ></a
+        >
+        <div class="workspace-switch">
+          <span class="org-avatar">L</span>
+          <div>Personal workspace<small>Open source edition</small></div>
+          <span class="chevron">⌄</span>
+        </div>
+        <div class="nav-label">WORKSPACE</div>
+        <nav>
+          <button class="nav-item active" data-view="overview" aria-label="Overview">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="7" height="7" rx="1.5" />
+              <rect x="14" y="3" width="7" height="7" rx="1.5" />
+              <rect x="3" y="14" width="7" height="7" rx="1.5" />
+              <rect x="14" y="14" width="7" height="7" rx="1.5" /></svg
+            ><span>Overview</span><span class="nav-dot"></span></button
+          ><button class="nav-item" data-view="detectors" aria-label="Detection rules">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M4 7h16M4 17h16" />
+              <circle cx="9" cy="7" r="3" />
+              <circle cx="15" cy="17" r="3" /></svg
+            ><span>Detection rules</span></button
+          ><button class="nav-item" data-view="library" aria-label="Sample library">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="4" y="3" width="16" height="18" rx="2" />
+              <path d="M8 7h8M8 11h8M8 15h5" /></svg
+            ><span>Sample library</span></button
+          ><button class="nav-item" data-view="providers" aria-label="Providers">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="4" width="18" height="14" rx="2" />
+              <path d="M8 22h8M12 18v4M3 8h18" /></svg
+            ><span>Providers</span></button
+          ><button class="nav-item" data-view="settings" aria-label="Personal settings">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path
+                d="M12 3v3M12 18v3M3 12h3M18 12h3M5.5 5.5l2 2M16.5 16.5l2 2M5.5 18.5l2-2M16.5 7.5l2-2"
+              />
+              <circle cx="12" cy="12" r="5" /></svg
+            ><span>Personal settings</span>
+          </button>
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="local-card">
+            <span class="pulse"></span><strong>Runs on your device</strong
+            ><small>No cloud scanning. No telemetry.</small>
+          </div>
+          <div class="profile">
+            <span class="profile-avatar">Y</span>
+            <div>You<small id="mode">Personal settings</small></div>
+            <span class="version">v0.1</span>
+          </div>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <div class="breadcrumbs">
+            Workspace <span>/</span> <strong id="crumb">Overview</strong>
+          </div>
+          <div class="topbar-actions">
+            <span class="local-pill"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="5" y="10" width="14" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+              Local processing</span
+            ><span class="edition-pill">Public</span><span class="account-icon">Y</span>
+          </div>
+        </div>
+        <div class="main-content">
+          <section class="view" data-panel="overview">
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">PROTECTION CENTER</div>
+                <h1>Keep sensitive data<br />on your side.</h1>
+                <p>Control what leaves your workspace. Keep the context that matters.</p>
+              </div>
+              <a class="button primary" href="workspace.html"
+                >Open private workspace
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14m-5-5 5 5-5 5" /></svg
+              ></a>
+            </div>
+            <div class="hero-card">
+              <div class="hero-copy">
+                <span class="status-pill"><span class="pulse"></span> Offline detection ready</span>
+                <h2>A privacy layer for<br />your AI workflow.</h2>
+                <p>
+                  Detect sensitive details, replace them with private placeholders, and read
+                  restored responses in your workspace.
+                </p>
+                <button class="button hero-button" data-goto="detectors">
+                  Review detection rules
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-5-5 5 5-5 5" />
+                  </svg>
+                </button>
+              </div>
+              <div class="flow-graphic">
+                <div class="flow-orbit orbit-one"></div>
+                <div class="flow-orbit orbit-two"></div>
+                <div class="flow-node node-a">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="5" y="10" width="14" height="11" rx="2" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg
+                  ><span>Private data</span>
+                </div>
+                <div class="flow-core">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m12 3 8 3v6c0 5-4 8-8 10-4-2-8-5-8-10V6Z" />
+                    <path d="m8 12 3 3 5-6" />
+                  </svg>
+                </div>
+                <div class="flow-node node-b">
+                  <code>[[PHONE_1]]</code><span>Protected prompt</span>
+                </div>
+                <div class="flow-caption">
+                  <span class="pulse"></span> Original values stay local
+                </div>
+              </div>
+            </div>
+            <div class="stats-grid">
+              <div class="stat-card">
+                <span>Local sample cases</span><strong id="sample-count">—</strong
+                ><small>Inspectable synthetic fixtures</small>
+              </div>
+              <div class="stat-card">
+                <span>Detection rules</span><strong id="rule-count">—</strong
+                ><small>Patterns, metadata & context</small>
+              </div>
+              <div class="stat-card">
+                <span>Configured providers</span><strong id="provider-count">—</strong
+                ><small>Exact-host protection</small>
+              </div>
+              <div class="stat-card">
+                <span>External scan requests</span><strong>0<span class="stat-dot"></span></strong
+                ><small>Detection stays on this device</small>
+              </div>
+            </div>
+            <div class="two-column">
+              <article class="card">
+                <div class="card-title">
+                  <h2>Protection coverage</h2>
+                  <button class="text-button" data-goto="detectors">
+                    View all
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14m-5-5 5 5-5 5" />
+                    </svg>
+                  </button>
+                </div>
+                <div id="coverage-list" class="coverage-list"></div>
+              </article>
+              <article class="card">
+                <div class="card-title">
+                  <h2>A safer path to AI</h2>
+                  <span class="subtle-badge">3 steps</span>
+                </div>
+                <div class="step">
+                  <span>01</span>
+                  <div>
+                    <strong>Compose in private</strong>
+                    <p>Write or import text in the extension workspace.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <span>02</span>
+                  <div>
+                    <strong>Review before it leaves</strong>
+                    <p>Check the detected details and sanitized preview.</p>
+                  </div>
+                </div>
+                <div class="step">
+                  <span>03</span>
+                  <div>
+                    <strong>Read the complete picture</strong>
+                    <p>Restore response placeholders in a private view.</p>
+                  </div>
+                </div>
+              </article>
+            </div>
+            <div class="notice-banner">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <path d="m12 3 8 3v6c0 5-4 8-8 10-4-2-8-5-8-10V6Z" />
+                <path d="m8 12 3 3 5-6" />
+              </svg>
+              <p>
+                <strong>Protection starts with the private workspace.</strong> Detection can miss
+                personal data. Provider page interception is a supporting guard; review every
+                sanitized prompt.
+              </p>
+            </div>
+          </section>
+          <section class="view" data-panel="detectors" hidden>
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">LOCAL INTELLIGENCE</div>
+                <h1>Detection rules</h1>
+                <p>Layered checks for personal information, financial data, and credentials.</p>
+              </div>
+              <button class="button primary" id="save-detection" disabled>
+                Save changes
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                <h2>Protection categories</h2>
+                <span class="subtle-badge" id="rules-badge">Local rules</span>
+              </div>
+              <div id="detection-controls" class="detection-controls"></div>
+              <div class="field-row">
+                <label for="country"
+                  >Local phone number region<small
+                    >International numbers use their own country code.</small
+                  ></label
+                ><button id="country" class="choice-trigger" type="button" disabled>
+                  United States
+                </button>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                <h2>Rule catalog</h2>
+                <span class="muted">Bundled locally</span>
+              </div>
+              <div class="table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Rule</th>
+                      <th>Category</th>
+                      <th>Method</th>
+                    </tr>
+                  </thead>
+                  <tbody id="rules-table"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+          <section class="view" data-panel="library" hidden>
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">TRANSPARENT BY DESIGN</div>
+                <h1>Sample library</h1>
+                <p>Explore local test cases and see how the current policy handles them.</p>
+              </div>
+              <span class="status-pill light"
+                ><span class="pulse"></span> Synthetic & published test values</span
+              >
+            </div>
+            <div class="library-toolbar">
+              <label class="search-box"
+                ><svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <circle cx="10" cy="10" r="6" />
+                  <path d="m15 15 5 5" /></svg
+                ><input
+                  id="sample-search"
+                  placeholder="Search a phone number, category, or sample…"
+                  aria-label="Search samples" /></label
+              ><button id="sample-category" class="choice-trigger" type="button">
+                All categories</button
+              ><button id="sample-type" class="choice-trigger" type="button">All cases</button>
+            </div>
+            <div class="library-layout">
+              <div class="card library-results">
+                <div class="card-title">
+                  <h2>Saved samples</h2>
+                  <span id="sample-results" class="muted"></span>
+                </div>
+                <div id="sample-list"></div>
+                <div class="pagination">
+                  <button class="button secondary" id="sample-prev">Previous</button
+                  ><span id="sample-page"></span
+                  ><button class="button secondary" id="sample-next">Next</button>
+                </div>
+              </div>
+              <div class="card sample-inspector">
+                <div class="card-title">
+                  <h2>Inspect a sample</h2>
+                  <span class="subtle-badge" id="sample-kind">LOCAL</span>
+                </div>
+                <div class="eyebrow small">ORIGINAL TEXT</div>
+                <pre id="sample-original">Select a sample to inspect its detection.</pre>
+                <div class="eyebrow small">CURRENT POLICY RESULT</div>
+                <pre id="sample-redacted"></pre>
+                <div id="sample-finding-list"></div>
+                <p class="muted" id="sample-note">
+                  Generated examples demonstrate known patterns. They do not measure real-world
+                  accuracy.
+                </p>
+                <button class="button secondary" id="sample-use" disabled>
+                  Try in private workspace
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-5-5 5 5-5 5" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </section>
+          <section class="view" data-panel="providers" hidden>
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">BROWSER COVERAGE</div>
+                <h1>Connected providers</h1>
+                <p>Control which pages use the private sending workflow.</p>
+              </div>
+              <button class="button primary" data-goto="settings">
+                Choose providers
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M12 5v14M5 12h14" />
+                </svg>
+              </button>
+            </div>
+            <div class="catalog-notice">
+              <div>
+                <strong id="catalog-title">30 curated AI providers, one private workflow</strong>
+                <p>
+                  Enable all curated providers while keeping your local detection settings and
+                  private terms.
+                </p>
+              </div>
+              <button id="add-catalog" class="button primary" type="button" disabled>
+                Enable all 30 providers
+              </button>
+            </div>
+            <label for="provider-search">Search configured providers</label>
+            <input id="provider-search" type="search" placeholder="Search by name or hostname" />
+            <p id="provider-results" aria-live="polite"></p>
+            <div id="provider-grid" class="provider-grid"></div>
+            <button id="provider-more" class="button" type="button" hidden>
+              Show more providers
+            </button>
+            <div class="card">
+              <div class="card-title">
+                <h2>Browser packages</h2>
+                <span class="subtle-badge">WebExtensions</span>
+              </div>
+              <div class="browser-grid">
+                <div>
+                  <span class="browser-letter chrome">C</span><strong>Chromium family</strong>
+                  <p>Chrome, Edge, Brave, Opera & Vivaldi</p>
+                  <small>Load the Chromium package as an unpacked extension.</small>
+                </div>
+                <div>
+                  <span class="browser-letter firefox">F</span><strong>Firefox</strong>
+                  <p>Dedicated Firefox manifest</p>
+                  <small
+                    >Temporary installation for development. Signing required for
+                    distribution.</small
+                  >
+                </div>
+                <div>
+                  <span class="browser-letter safari">S</span><strong>Safari</strong>
+                  <p>Apple Web Extension source</p>
+                  <small>Convert and build with Apple tooling. Enable after installation.</small>
+                </div>
+              </div>
+            </div>
+            <div class="notice-banner">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="3" y="4" width="18" height="14" rx="2" />
+                <path d="M8 22h8M12 18v4M3 8h18" />
+              </svg>
+              <p>
+                Composer and send controls are identified through accessibility labels and form
+                relationships. Ambiguous editors, existing attachments, or alternate send paths may
+                require an updated adapter.
+              </p>
+            </div>
+          </section>
+          <section class="view" data-panel="settings" hidden>
+            <div class="page-heading">
+              <div>
+                <div class="eyebrow">PERSONAL PREFERENCES</div>
+                <h1>Your rules. Your boundary.</h1>
+                <p>Choose your AI providers and the details that stay private.</p>
+              </div>
+              <button class="button primary" id="save" disabled>
+                Save settings
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m5 12 4 4L19 6" />
+                </svg>
+              </button>
+            </div>
+            <div class="two-column">
+              <div class="card">
+                <h2>Always redact</h2>
+                <p>
+                  One term per line. Add known names, addresses, client names, and confidential
+                  project identifiers.
+                </p>
+                <label for="sensitive" class="sr-only">Sensitive terms</label
+                ><textarea
+                  id="sensitive"
+                  disabled
+                  rows="6"
+                  placeholder="Jane Example&#10;Project Evergreen&#10;Internal customer identifier"
+                ></textarea>
+              </div>
+              <div class="card">
+                <h2>Never send</h2>
+                <p>One term per line. Matching any term blocks the complete message.</p>
+                <label for="blocked" class="sr-only">Blocked terms</label
+                ><textarea
+                  id="blocked"
+                  disabled
+                  rows="6"
+                  placeholder="STRICTLY CONFIDENTIAL&#10;Do not share externally"
+                ></textarea>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">
+                <h2>Your AI providers</h2>
+                <span class="subtle-badge">30 curated providers</span>
+              </div>
+              <p>
+                Choose which provider pages use the private sending workflow. Each entry covers only
+                the exact hostnames shown.
+              </p>
+              <div id="site-controls" class="personal-provider-controls"></div>
+            </div>
+            <p id="status" class="inline-status" role="status"></p>
+            <div class="notice-banner">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <rect x="5" y="10" width="14" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+              <p>
+                Your preferences stay on this device. Use the private workspace to review your
+                message before sending it to an enabled provider.
+              </p>
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <script type="module" src="admin.js"></script>
+  </body>
+</html>

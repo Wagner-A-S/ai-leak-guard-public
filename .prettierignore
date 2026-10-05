@@ -1,0 +1,8 @@
+node_modules/
+dist/
+releases/
+safari/
+data/
+vendor/
+docs/previews/
+package-lock.json

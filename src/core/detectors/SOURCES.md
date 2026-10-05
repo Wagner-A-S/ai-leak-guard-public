@@ -1,0 +1,14 @@
+# Local detector reference sources
+
+The extension uses its packaged catalog and validators only. These links are development references; no text, rules, or samples are fetched during scanning.
+
+- [libphonenumber-js source and full numbering metadata](https://github.com/catamphetamine/libphonenumber-js): international number parsing and validation, bundled by the project build.
+- [SWIFT IBAN registry, release 101](https://www.swift.com/sites/default/files/files/iban-registry-v101.pdf): ISO 13616 country lengths and MOD97-10.
+- [US Social Security Administration: invalid SSNs](https://secure.ssa.gov/poms.nsf/lnx/0110201035): excluded area, group and serial values.
+- [Central Bank of Russia: pension-reporting methodology](https://cbr.ru/StaticHtml/File/117620/method_0921.pdf), block 7, printed pages 14–15: SNILS weighted check digit, the validation threshold and remainder exceptions. This is the only regional checksum implemented by this expansion; other regional IDs remain contextual.
+- [ITU national numbering plans](https://www.itu.int/ITU-T/inr/nnp/index.html) and [plan repository](https://www.itu.int/oth/T0202.aspx?lang=en&parent=T0202): calling codes and national numbering shapes for Russia and neighboring countries. Possible-length and valid-format classifications do not prove subscriber assignment.
+- [Gitleaks upstream configuration](https://github.com/gitleaks/gitleaks/blob/master/config/gitleaks.toml): examples of service-specific credential prefixes. Our JavaScript matchers are independently implemented, and token-shape matches do not authenticate credentials.
+
+Context rules deliberately protect labeled values even if a checksum is invalid or a format is unfamiliar. Unlabeled checksum checks reduce false positives; they do not prove a number is assigned or sensitive. Russia/neighboring-country identity labels cover twelve regions; their values are masked without pretending to validate issuance rules. Terminology references and synthetic fixture provenance are documented in [the local corpus sources](../../../data/SOURCES.md).
+
+Personal names and postal addresses use labels, selected bounded heuristics and custom literal sensitive terms. The common-given-name lexicon is curated locally; it contains given-name tokens, not people records. Its unlabeled rule requires a known given token followed by a capitalized surname, with an optional selected Cyrillic patronymic suffix. It does not classify arbitrary capitalized word pairs. German street heuristics recognize common street suffixes and a house number, including lowercase text. Regional address heuristics require a localized street marker and a house number. Labels protect further languages, including Armenian and Georgian, without requiring those scripts to be present in the given-name lexicon. All of these heuristics can produce false positives and negatives; sample success is regression coverage, not a measured production accuracy claim.

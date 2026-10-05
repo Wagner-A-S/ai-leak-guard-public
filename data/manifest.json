@@ -1,0 +1,486 @@
+{
+  "schemaVersion": 1,
+  "version": "2026.10.04",
+  "synthetic": true,
+  "total": 24517,
+  "positiveCount": 20521,
+  "negativeCount": 3996,
+  "uniqueSensitiveValues": 13665,
+  "seedCount": 13033,
+  "curatedSeedCounts": {
+    "paymentCardNumbers": 93,
+    "ibanNumbers": 31,
+    "bankAccountFields": 16,
+    "individuallyReservedPhoneNumbers": 40,
+    "reservedPhoneRangeDefinitions": 50,
+    "syntheticNameSeeds": 16,
+    "syntheticStreetSeeds": 12,
+    "syntheticTownSeeds": 8,
+    "regionalCountrySeeds": 12
+  },
+  "categories": [
+    {
+      "id": "phone.nanp",
+      "label": "North American phone numbers",
+      "count": 2784,
+      "positiveCount": 2784,
+      "negativeCount": 0,
+      "seedCount": 384
+    },
+    {
+      "id": "phone.uk",
+      "label": "United Kingdom phone numbers",
+      "count": 1456,
+      "positiveCount": 1456,
+      "negativeCount": 0,
+      "seedCount": 208
+    },
+    {
+      "id": "phone.au",
+      "label": "Australian phone numbers",
+      "count": 1050,
+      "positiveCount": 1050,
+      "negativeCount": 0,
+      "seedCount": 150
+    },
+    {
+      "id": "phone.de",
+      "label": "German phone numbers",
+      "count": 1050,
+      "positiveCount": 1050,
+      "negativeCount": 0,
+      "seedCount": 150
+    },
+    {
+      "id": "phone.fr",
+      "label": "French phone numbers",
+      "count": 840,
+      "positiveCount": 840,
+      "negativeCount": 0,
+      "seedCount": 120
+    },
+    {
+      "id": "email.reserved",
+      "label": "Email addresses on reserved domains",
+      "count": 1464,
+      "positiveCount": 1464,
+      "negativeCount": 0,
+      "seedCount": 1464
+    },
+    {
+      "id": "email.obfuscated",
+      "label": "Obfuscated email addresses",
+      "count": 144,
+      "positiveCount": 144,
+      "negativeCount": 0,
+      "seedCount": 144
+    },
+    {
+      "id": "email.unicode",
+      "label": "Unicode email addresses",
+      "count": 288,
+      "positiveCount": 288,
+      "negativeCount": 0,
+      "seedCount": 288
+    },
+    {
+      "id": "card.test",
+      "label": "Payment card sandbox numbers",
+      "count": 562,
+      "positiveCount": 562,
+      "negativeCount": 0,
+      "seedCount": 93
+    },
+    {
+      "id": "card.context",
+      "label": "Labeled card security values",
+      "count": 48,
+      "positiveCount": 48,
+      "negativeCount": 0,
+      "seedCount": 48
+    },
+    {
+      "id": "bank.iban",
+      "label": "International bank account sandbox numbers",
+      "count": 248,
+      "positiveCount": 248,
+      "negativeCount": 0,
+      "seedCount": 31
+    },
+    {
+      "id": "bank.account",
+      "label": "Labeled bank account sandbox values",
+      "count": 64,
+      "positiveCount": 64,
+      "negativeCount": 0,
+      "seedCount": 16
+    },
+    {
+      "id": "id.ssn",
+      "label": "Synthetic US Social Security fields",
+      "count": 480,
+      "positiveCount": 480,
+      "negativeCount": 0,
+      "seedCount": 160
+    },
+    {
+      "id": "id.context",
+      "label": "Synthetic labeled personal identifiers",
+      "count": 928,
+      "positiveCount": 928,
+      "negativeCount": 0,
+      "seedCount": 322
+    },
+    {
+      "id": "id.public_test",
+      "label": "Official sandbox identity values",
+      "count": 16,
+      "positiveCount": 16,
+      "negativeCount": 0,
+      "seedCount": 4
+    },
+    {
+      "id": "id.birth_date",
+      "label": "Synthetic dates in birth-date fields",
+      "count": 128,
+      "positiveCount": 128,
+      "negativeCount": 0,
+      "seedCount": 48
+    },
+    {
+      "id": "secret.api",
+      "label": "Synthetic API token shapes",
+      "count": 1134,
+      "positiveCount": 1134,
+      "negativeCount": 0,
+      "seedCount": 378
+    },
+    {
+      "id": "secret.assignment",
+      "label": "Synthetic password and token assignments",
+      "count": 168,
+      "positiveCount": 168,
+      "negativeCount": 0,
+      "seedCount": 168
+    },
+    {
+      "id": "secret.authorization",
+      "label": "Synthetic authorization headers",
+      "count": 96,
+      "positiveCount": 96,
+      "negativeCount": 0,
+      "seedCount": 96
+    },
+    {
+      "id": "secret.url",
+      "label": "Synthetic URL credentials",
+      "count": 96,
+      "positiveCount": 96,
+      "negativeCount": 0,
+      "seedCount": 96
+    },
+    {
+      "id": "secret.jwt",
+      "label": "Synthetic JSON Web Tokens",
+      "count": 48,
+      "positiveCount": 48,
+      "negativeCount": 0,
+      "seedCount": 48
+    },
+    {
+      "id": "secret.private_key",
+      "label": "Synthetic private-key delimiters",
+      "count": 32,
+      "positiveCount": 32,
+      "negativeCount": 0,
+      "seedCount": 32
+    },
+    {
+      "id": "person.context",
+      "label": "Invented names in personal fields",
+      "count": 304,
+      "positiveCount": 304,
+      "negativeCount": 0,
+      "seedCount": 32
+    },
+    {
+      "id": "address.context",
+      "label": "Invented postal addresses",
+      "count": 408,
+      "positiveCount": 408,
+      "negativeCount": 0,
+      "seedCount": 120
+    },
+    {
+      "id": "ip.documentation",
+      "label": "Reserved documentation IP addresses",
+      "count": 320,
+      "positiveCount": 320,
+      "negativeCount": 0,
+      "seedCount": 320
+    },
+    {
+      "id": "mixed.record",
+      "label": "Synthetic records with several sensitive fields",
+      "count": 192,
+      "positiveCount": 192,
+      "negativeCount": 0,
+      "seedCount": 192
+    },
+    {
+      "id": "negative.prose",
+      "label": "Ordinary prose",
+      "count": 128,
+      "positiveCount": 0,
+      "negativeCount": 128,
+      "seedCount": 128
+    },
+    {
+      "id": "negative.dates",
+      "label": "Dates, times, and durations",
+      "count": 128,
+      "positiveCount": 0,
+      "negativeCount": 128,
+      "seedCount": 128
+    },
+    {
+      "id": "negative.versions",
+      "label": "Versions and decimal quantities",
+      "count": 128,
+      "positiveCount": 0,
+      "negativeCount": 128,
+      "seedCount": 128
+    },
+    {
+      "id": "negative.orders",
+      "label": "Ordinary order and part references",
+      "count": 128,
+      "positiveCount": 0,
+      "negativeCount": 128,
+      "seedCount": 128
+    },
+    {
+      "id": "negative.checksums",
+      "label": "Invalid unlabeled numeric checksums",
+      "count": 124,
+      "positiveCount": 0,
+      "negativeCount": 124,
+      "seedCount": 124
+    },
+    {
+      "id": "negative.placeholders",
+      "label": "Redaction tokens and empty forms",
+      "count": 128,
+      "positiveCount": 0,
+      "negativeCount": 128,
+      "seedCount": 128
+    },
+    {
+      "id": "negative.code",
+      "label": "Code and documentation without credentials",
+      "count": 128,
+      "positiveCount": 0,
+      "negativeCount": 128,
+      "seedCount": 128
+    },
+    {
+      "id": "phone.regional",
+      "label": "Synthetic Russia and neighboring-country phone shapes",
+      "count": 2577,
+      "positiveCount": 2577,
+      "negativeCount": 0,
+      "seedCount": 1625
+    },
+    {
+      "id": "id.regional",
+      "label": "Synthetic regional personal identifier labels",
+      "count": 864,
+      "positiveCount": 864,
+      "negativeCount": 0,
+      "seedCount": 864
+    },
+    {
+      "id": "person.regional",
+      "label": "Invented regional names and multilingual fields",
+      "count": 864,
+      "positiveCount": 864,
+      "negativeCount": 0,
+      "seedCount": 288
+    },
+    {
+      "id": "address.regional",
+      "label": "Invented regional streets and address fields",
+      "count": 864,
+      "positiveCount": 864,
+      "negativeCount": 0,
+      "seedCount": 288
+    },
+    {
+      "id": "birth.regional",
+      "label": "Synthetic multilingual birth-date fields",
+      "count": 264,
+      "positiveCount": 264,
+      "negativeCount": 0,
+      "seedCount": 264
+    },
+    {
+      "id": "mixed.regional",
+      "label": "Synthetic multilingual private records",
+      "count": 360,
+      "positiveCount": 360,
+      "negativeCount": 0,
+      "seedCount": 360
+    },
+    {
+      "id": "person.unlabeled",
+      "label": "Invented names with common given-name tokens",
+      "count": 200,
+      "positiveCount": 200,
+      "negativeCount": 0,
+      "seedCount": 200
+    },
+    {
+      "id": "address.german",
+      "label": "Invented unlabeled German street patterns",
+      "count": 180,
+      "positiveCount": 180,
+      "negativeCount": 0,
+      "seedCount": 180
+    },
+    {
+      "id": "negative.regional",
+      "label": "Regional prose and ordinary nonprivate references",
+      "count": 2304,
+      "positiveCount": 0,
+      "negativeCount": 2304,
+      "seedCount": 2304
+    },
+    {
+      "id": "negative.name_address",
+      "label": "Capitalized technical words and incomplete street phrases",
+      "count": 800,
+      "positiveCount": 0,
+      "negativeCount": 800,
+      "seedCount": 800
+    }
+  ],
+  "countries": [
+    "AE",
+    "AM",
+    "AR",
+    "AT",
+    "AU",
+    "AZ",
+    "BE",
+    "BG",
+    "BR",
+    "BY",
+    "CA",
+    "CH",
+    "CL",
+    "CN",
+    "CO",
+    "CR",
+    "CY",
+    "CZ",
+    "DE",
+    "DK",
+    "EC",
+    "EE",
+    "ES",
+    "FI",
+    "FR",
+    "GB",
+    "GE",
+    "GI",
+    "GR",
+    "HK",
+    "HR",
+    "HU",
+    "IE",
+    "IN",
+    "IT",
+    "JP",
+    "KG",
+    "KZ",
+    "LI",
+    "LT",
+    "LU",
+    "LV",
+    "MD",
+    "MT",
+    "MX",
+    "MY",
+    "NL",
+    "NO",
+    "NZ",
+    "PA",
+    "PE",
+    "PL",
+    "PT",
+    "PY",
+    "RO",
+    "RU",
+    "SE",
+    "SG",
+    "SI",
+    "SK",
+    "TH",
+    "TJ",
+    "TM",
+    "TW",
+    "UA",
+    "US",
+    "UY",
+    "UZ"
+  ],
+  "files": {
+    "positives": {
+      "path": "positives.json",
+      "count": 20521,
+      "sha256": "9b257f51458824b87207365e1871949b30a2652ae73ce6e2cf9f7604d9114164"
+    },
+    "negatives": {
+      "path": "negatives.json",
+      "count": 3996,
+      "sha256": "c47e002728cccefb874d7e8ef9e8791459ae8082b0161ce6777778d5d16bbf14"
+    }
+  },
+  "policy": {
+    "redactEmails": true,
+    "redactPhones": true,
+    "redactCards": true,
+    "redactBankAccounts": true,
+    "redactIdentifiers": true,
+    "redactSecrets": true,
+    "redactNames": true,
+    "redactAddresses": true,
+    "redactNetwork": true,
+    "sensitiveTerms": [],
+    "blockTerms": [],
+    "defaultCountry": "US"
+  },
+  "provenance": "SOURCES.md",
+  "sources": {
+    "nanpa": "https://nanpa.com/numbering/555-line-numbers",
+    "ofcom": "https://www.ofcom.org.uk/phones-and-broadband/phone-numbers/numbers-for-drama",
+    "acma": "https://www.acma.gov.au/phone-numbers-use-tv-shows-films-and-creative-works",
+    "bnetza": "https://www.bundesnetzagentur.de/DE/Fachthemen/Telekommunikation/Nummerierung/_DL/mittlg148_2021.pdf?__blob=publicationFile&v=1",
+    "arcep": "https://www.arcep.fr/uploads/tx_gsavis/18-0881.pdf",
+    "iana": "https://www.iana.org/help/example-domains",
+    "stripe": "https://docs.stripe.com/testing",
+    "adyen": "https://docs.adyen.com/development-resources/test-cards-and-credentials/alternative-payment-method-credentials/",
+    "gocardless": "https://docs.gocardless.com/docs/developer-resources/test-bank-details",
+    "ssa": "https://www.ssa.gov/employer/randomizationfaqs.html",
+    "rfc5737": "https://www.rfc-editor.org/rfc/rfc5737.html",
+    "rfc3849": "https://www.rfc-editor.org/rfc/rfc3849.html",
+    "synthetic": "Locally generated, invented test fixture; see SOURCES.md."
+  },
+  "limitations": [
+    "Synthetic variants measure regression coverage, not real-world recall or leak prevention guarantees.",
+    "Official sandbox values and reserved numbers are fixtures; supported patterns also match unseen values.",
+    "Bounded given-name/street heuristics cover selected unlabeled names and addresses; unknown names, multiline addresses, images, binary documents and sensitive narrative require additional protection.",
+    "Regional identifiers and nonworking national phone fixtures use contextual labels; no new country-specific checksum or production recall is claimed. Network detection is optional in normal policy.",
+    "API token fixtures match syntax only and cannot authenticate; private-key bodies are not cryptographic keys."
+  ]
+}

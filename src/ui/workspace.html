@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI Leak Guard Public · Private workspace</title>
+    <link rel="icon" href="../../assets/mark.svg" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body data-edition="public">
+    <div class="app-shell">
+      <aside class="sidebar">
+        <a class="brand" href="admin.html" aria-label="AI Leak Guard Public"
+          ><img src="../../assets/mark.svg" alt="" /><span
+            >Leak Guard<small>PUBLIC · OPEN SOURCE</small></span
+          ></a
+        >
+        <div class="workspace-switch">
+          <span class="org-avatar">L</span>
+          <div>Personal workspace<small>Open source edition</small></div>
+          <span class="chevron">⌄</span>
+        </div>
+        <div class="nav-label">WORKSPACE</div>
+        <nav>
+          <a class="nav-item active" href="#" aria-label="Private workspace"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m12 3 8 3v6c0 5-4 8-8 10-4-2-8-5-8-10V6Z" />
+              <path d="m8 12 3 3 5-6" /></svg
+            >Private workspace</a
+          ><a class="nav-item" href="admin.html" aria-label="Personal settings" target="_blank"
+            ><svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="3" y="3" width="7" height="7" rx="1.5" />
+              <rect x="14" y="3" width="7" height="7" rx="1.5" />
+              <rect x="3" y="14" width="7" height="7" rx="1.5" />
+              <rect x="14" y="14" width="7" height="7" rx="1.5" /></svg
+            >Personal settings</a
+          >
+        </nav>
+        <div class="sidebar-bottom">
+          <div class="local-card">
+            <span class="pulse"></span><strong>Runs on your device</strong
+            ><small>No cloud scanning. No telemetry.</small>
+          </div>
+          <div class="profile">
+            <span class="profile-avatar">Y</span>
+            <div>You<small id="mode">Personal settings</small></div>
+            <span class="version">v0.1</span>
+          </div>
+        </div>
+      </aside>
+      <main class="main">
+        <div class="topbar">
+          <div class="breadcrumbs">
+            Workspace <span>/</span> <strong id="crumb">Private workspace</strong>
+          </div>
+          <div class="topbar-actions">
+            <span class="local-pill"
+              ><svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="5" y="10" width="14" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+              Local processing</span
+            ><span class="edition-pill">Public</span><span class="account-icon">Y</span>
+          </div>
+        </div>
+        <div class="main-content">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow">PRIVATE WORKSPACE</div>
+              <h1>Think freely.<br />Share carefully.</h1>
+              <p>Keep sensitive details on your device while working with AI.</p>
+            </div>
+            <div class="button-row">
+              <span class="status-pill light" id="connection" role="status"
+                ><span class="pulse"></span> Checking connection</span
+              >
+              <button class="button secondary" id="reconnect" hidden>Reconnect guard</button>
+            </div>
+          </div>
+          <div class="workspace-steps">
+            <div class="active"><span>1</span>Compose privately</div>
+            <div><span>2</span>Review & send</div>
+            <div><span>3</span>Restore response</div>
+          </div>
+          <div class="compose-grid">
+            <section class="card compose-card">
+              <div class="card-title">
+                <h2>Your original message</h2>
+                <span class="subtle-badge"
+                  ><svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <rect x="5" y="10" width="14" height="11" rx="2" />
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+                  </svg>
+                  PRIVATE</span
+                >
+              </div>
+              <label for="draft" class="sr-only">Private message</label
+              ><textarea
+                id="draft"
+                class="draft-input"
+                placeholder="Write naturally. Names, numbers, and private details are checked locally before your message leaves…"
+              ></textarea>
+              <div class="compose-footer">
+                <label class="file-button" for="file"
+                  ><svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  Import text<input
+                    id="file"
+                    type="file"
+                    accept=".txt,.csv,.md,.json"
+                    hidden /></label
+                ><span class="muted" id="char-count">0 characters</span>
+              </div>
+              <div class="button-row">
+                <button class="button primary" id="scan" disabled>
+                  Check & redact
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m12 3 8 3v6c0 5-4 8-8 10-4-2-8-5-8-10V6Z" />
+                    <path d="m8 12 3 3 5-6" />
+                  </svg></button
+                ><button class="text-button" id="clear">Clear session</button>
+              </div>
+            </section>
+            <section class="card compose-card preview-card">
+              <div class="card-title">
+                <h2>What AI receives</h2>
+                <span class="subtle-badge" id="match-count">AWAITING CHECK</span>
+              </div>
+              <div id="preview-empty" class="empty-state">
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="m12 3 8 3v6c0 5-4 8-8 10-4-2-8-5-8-10V6Z" />
+                  <path d="m8 12 3 3 5-6" /></svg
+                ><strong>A little privacy goes a long way.</strong>
+                <p>Check your message to see the sanitized version here.</p>
+              </div>
+              <pre id="preview" class="prompt-preview" hidden></pre>
+              <div id="findings" class="finding-chips"></div>
+              <div class="preview-footer">
+                <button class="button primary" id="send" disabled>
+                  Send sanitized message
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14m-5-5 5 5-5 5" />
+                  </svg></button
+                ><small>Review the preview for any missed sensitive details.</small>
+              </div>
+            </section>
+          </div>
+          <div id="status" class="workspace-status" role="status" aria-live="polite">
+            Loading local protection policy…
+          </div>
+          <details class="card connection-details">
+            <summary>Connection & support details</summary>
+            <div class="connection-facts">
+              <div>
+                <span>Extension version</span><strong id="detail-version">Checking…</strong>
+              </div>
+              <div><span>Policy control</span><strong id="detail-policy">Checking…</strong></div>
+              <div><span>Provider</span><strong id="detail-provider">No tab connected</strong></div>
+              <div><span>Page protection</span><strong id="detail-guard">Checking…</strong></div>
+              <div>
+                <span>Message editor</span
+                ><strong id="detail-composer">Checked when sending</strong>
+              </div>
+              <div>
+                <span>Provider send action</span
+                ><strong id="detail-send">Checked when sending</strong>
+              </div>
+            </div>
+            <p id="detail-operation" class="muted">Loading local protection policy…</p>
+            <div class="button-row">
+              <button class="button secondary" id="export-support">Save support details</button>
+              <small class="muted"
+                >Includes connection state only. Your message and private values are
+                excluded.</small
+              >
+            </div>
+          </details>
+          <section class="card response-card">
+            <div class="card-title">
+              <div>
+                <div class="eyebrow small">THE COMPLETE PICTURE</div>
+                <h2>Privately restored response</h2>
+              </div>
+              <button class="button secondary" id="read">
+                Refresh response
+                <svg
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14m-5-5 5 5-5 5" />
+                </svg>
+              </button>
+            </div>
+            <pre id="response" class="response-output">
+Your response will appear here. Original values are restored only in this private view.</pre>
+            <div class="response-note">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+                <rect x="5" y="10" width="14" height="11" rx="2" />
+                <path d="M8 10V7a4 4 0 0 1 8 0v3" />
+              </svg>
+              Your originals are never inserted back into the provider page.
+            </div>
+          </section>
+          <div class="notice-banner">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m12 3 8 3v6c0 5-4 8-8 10-4-2-8-5-8-10V6Z" />
+              <path d="m8 12 3 3 5-6" />
+            </svg>
+            <p>
+              Use this workspace for original data. Text imports only; PDF, Office, image, and audio
+              attachments are unsupported. Closing this window clears its private mapping.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <script type="module" src="workspace.js"></script>
+  </body>
+</html>

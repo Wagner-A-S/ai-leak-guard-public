@@ -1,0 +1,10 @@
+{
+  "type": "object",
+  "properties": {
+    "policy": {
+      "type": "string",
+      "title": "Locked AI Leak Guard policy",
+      "description": "JSON policy matching the admin editor. Sites use exact lowercase hosts and optional literal text labels: {host, labels?: {composer?: string[], send?: string[], response?: string[]}}. CSS selectors are unsupported. Overrides user policy; legacy stored selector fields are discarded during safe in-memory migration."
+    }
+  }
+}

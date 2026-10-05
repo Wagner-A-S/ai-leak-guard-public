@@ -1,0 +1,47 @@
+{
+  "name": "ai-leak-guard-public",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prepare": "node scripts/generate-samples.mjs",
+    "test": "node --test tests/*.test.js",
+    "build": "node scripts/build.mjs",
+    "build:safari": "node scripts/build-safari.mjs",
+    "release:check": "node scripts/check-release.mjs",
+    "samples": "node scripts/generate-samples.mjs",
+    "test:ui": "playwright test",
+    "lint:firefox": "addons-linter dist/firefox --output text",
+    "preview": "node scripts/preview-server.mjs",
+    "format": "prettier --write src scripts tests *.json playwright.config.js",
+    "format:check": "prettier --check src scripts tests *.json playwright.config.js",
+    "verify": "npm run format:check && npm test && npm run build && npm run lint:firefox"
+  },
+  "dependencies": {
+    "libphonenumber-js": "1.13.14"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.63.0",
+    "addons-linter": "10.13.0",
+    "esbuild": "0.28.2",
+    "fflate": "0.8.3",
+    "prettier": "3.9.9",
+    "prosemirror-model": "1.25.12",
+    "prosemirror-schema-basic": "1.2.5",
+    "prosemirror-state": "1.4.4",
+    "prosemirror-view": "1.42.6"
+  },
+  "engines": {
+    "node": ">=22.13.0 <23 || >=24"
+  },
+  "license": "MIT",
+  "description": "AI Leak Guard Public: open-source local AI privacy workspace and browser extension.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wagner-A-S/ai-leak-guard-public.git"
+  },
+  "homepage": "https://github.com/Wagner-A-S/ai-leak-guard-public#readme",
+  "bugs": {
+    "url": "https://github.com/Wagner-A-S/ai-leak-guard-public/issues"
+  }
+}
