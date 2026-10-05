@@ -44,13 +44,19 @@ function harness({
   probeMissing = false,
   injectionError = false,
   guardFailed = false,
+  workspaceResult,
+  workspaceGate,
+  workspaceFocusError = false,
 } = {}) {
   const listeners = {},
     storageCalls = [],
     windows = [],
     tabs = [],
     messages = [],
-    injections = [];
+    injections = [],
+    runtimeMessages = [],
+    tabUpdates = [],
+    windowUpdates = [];
   const installedGuards = new Set();
   let activePolicy = policy;
   const readStarted = deferred();
@@ -86,6 +92,11 @@ function harness({
       getURL(path) {
         return `chrome-extension://guard/${path}`;
       },
+      async sendMessage(message) {
+        runtimeMessages.push(message);
+        if (workspaceGate) return workspaceGate.promise;
+        return workspaceResult;
+      },
     },
     action: { onClicked: event('action') },
     tabs: {
@@ -112,6 +123,10 @@ function harness({
       async create(options) {
         tabs.push(options);
       },
+      async update(id, options) {
+        tabUpdates.push({ id, options });
+        if (workspaceFocusError) throw new Error('The workspace tab has closed.');
+      },
     },
     scripting: {
       async executeScript(options) {
@@ -126,6 +141,9 @@ function harness({
           async create(options) {
             windows.push(options);
             if (popupError) throw new Error('Popup unavailable');
+          },
+          async update(id, options) {
+            windowUpdates.push({ id, options });
           },
         },
   };
@@ -160,6 +178,9 @@ function harness({
     tabs,
     messages,
     injections,
+    runtimeMessages,
+    tabUpdates,
+    windowUpdates,
     set policy(value) {
       activePolicy = value;
     },
@@ -394,6 +415,92 @@ test('toolbar activation injects before opening the private workspace', async ()
   await h.listeners.action({ id: 27 });
   assert.equal(h.injections.length, 1);
   assert.equal(h.windows.length, 1);
+});
+test('toolbar refocuses the live workspace without navigating or replacing its session', async () => {
+  // A fresh background has no remembered workspace handle, as after an MV3 restart.
+  const h = harness({ workspaceResult: { tabId: 27, workspaceTabId: 45, windowId: 8 } });
+  await h.listeners.action({ id: 27 });
+  assert.deepEqual(JSON.parse(JSON.stringify(h.runtimeMessages)), [
+    { type: 'locate-workspace', tabId: 27 },
+  ]);
+  assert.deepEqual(JSON.parse(JSON.stringify(h.tabUpdates)), [
+    { id: 45, options: { active: true } },
+  ]);
+  assert.deepEqual(JSON.parse(JSON.stringify(h.windowUpdates)), [
+    { id: 8, options: { focused: true } },
+  ]);
+  assert.equal(h.windows.length, 0);
+  assert.equal(h.tabs.length, 0);
+});
+test('toolbar rejects mismatched and malformed workspace identities before focusing', async () => {
+  for (const workspaceResult of [
+    { tabId: 28, workspaceTabId: 45, windowId: 8 },
+    { tabId: '27', workspaceTabId: 45, windowId: 8 },
+    { tabId: 27, workspaceTabId: 27, windowId: 8 },
+    { tabId: 27, workspaceTabId: -1, windowId: 8 },
+    { tabId: 27, workspaceTabId: '45', windowId: 8 },
+    { tabId: 27, workspaceTabId: 45, windowId: null },
+    { tabId: 27, workspaceTabId: 45, windowId: -1 },
+    { tabId: 27, workspaceTabId: 45, windowId: 0.5 },
+    undefined,
+  ]) {
+    const h = harness({ workspaceResult });
+    await h.listeners.action({ id: 27 });
+    assert.equal(h.tabUpdates.length, 0);
+    assert.equal(h.windowUpdates.length, 0);
+    assert.equal(h.windows.length, 1);
+  }
+});
+test('a workspace closing during focus opens a fresh session safely', async () => {
+  const h = harness({
+    workspaceResult: { tabId: 27, workspaceTabId: 45, windowId: 8 },
+    workspaceFocusError: true,
+  });
+  await h.listeners.action({ id: 27 });
+  assert.equal(h.windowUpdates.length, 0);
+  assert.equal(h.windows.length, 1);
+});
+test('concurrent toolbar requests share one discovery and workspace opening', async () => {
+  const gate = deferred();
+  const h = harness({ workspaceGate: gate });
+  const first = h.listeners.action({ id: 27 });
+  const second = h.listeners.action({ id: 27 });
+  assert.equal(first, second);
+  gate.resolve(undefined);
+  await Promise.all([first, second]);
+  assert.equal(h.runtimeMessages.length, 1);
+  assert.equal(h.windows.length, 1);
+});
+test('workspace discovery expires and a late reply cannot focus an old session', async (t) => {
+  t.mock.timers.enable({ apis: ['Date', 'setTimeout'], now: 0 });
+  const gate = deferred(),
+    started = deferred(),
+    h = harness();
+  h.api.runtime.sendMessage = () => {
+    started.resolve();
+    return gate.promise;
+  };
+  const opening = h.listeners.action({ id: 27 });
+  await started.promise;
+  t.mock.timers.tick(500);
+  await opening;
+  assert.equal(h.windows.length, 1);
+  gate.resolve({ tabId: 27, workspaceTabId: 45, windowId: 8 });
+  await h.settle();
+  assert.equal(h.tabUpdates.length, 0);
+  assert.equal(h.windowUpdates.length, 0);
+});
+test('a blocked draft opens its own handoff workspace without reusing an active vault', async () => {
+  const h = harness({ workspaceResult: { tabId: 27, workspaceTabId: 45, windowId: 8 } });
+  const handoffId = 'aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa';
+  assert.equal(
+    (await h.message({ type: 'open-workspace', handoffId }, { ...h.sender, frameId: 0 })).ok,
+    true,
+  );
+  assert.equal(h.runtimeMessages.length, 0);
+  assert.equal(h.tabUpdates.length, 0);
+  assert.equal(h.windows.length, 1);
+  assert.match(h.windows[0].url, /draft=aaaaaaaa-aaaa-4aaa-8aaa-aaaaaaaaaaaa/);
 });
 test('failed scripting permission reports unavailability rather than readiness', async () => {
   const h = harness({ probeMissing: true, injectionError: true });

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "AI Leak Guard Public",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Open-source private AI workspace with offline redaction and local response restoration.",
   "permissions": ["storage", "activeTab", "scripting"],
   "host_permissions": [

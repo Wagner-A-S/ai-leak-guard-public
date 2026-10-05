@@ -1,6 +1,6 @@
 # Release requirements
 
-AI Leak Guard Public 0.1.0 is an open-source development/pilot edition. Locally preparing source and packages does not publish a repository, obtain browser-store approval or certify complete data-loss prevention.
+AI Leak Guard Public 0.1.1 is an open-source development/pilot edition. Locally preparing source and packages does not publish a repository, obtain browser-store approval or certify complete data-loss prevention.
 
 ## Evidence before distribution
 

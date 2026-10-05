@@ -27,6 +27,8 @@ Core imports only core modules and the pinned local phone implementation. Archit
 
 The UI and platform layer communicate with the scanner worker through bounded requests. `RedactionSession` owns the private placeholder map. The UI holds the original draft and restored result it displays, but scan results omit original finding values and do not expose the map. Clear terminates the old session, creates a new nonce and invalidates previous reviews.
 
+An AI answer pasted into the workspace uses the same worker restoration path as a captured provider response. Only exact placeholders belonging to the current session can recover their original values; unknown or altered tokens cannot be restored. The map is lost on Clear, workspace refresh or close. An explicit copy action writes the restored result to the local clipboard, without inserting originals into provider DOM or persisting the map.
+
 ```mermaid
 flowchart LR
   UI[Private workspace] -->|Original text and validated settings| W[Local scanner worker]

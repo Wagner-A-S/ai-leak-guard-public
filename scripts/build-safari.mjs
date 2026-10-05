@@ -11,6 +11,7 @@ if (process.platform !== 'darwin')
   throw new Error(
     'Safari app conversion requires macOS with Xcode. The source zip can also be packaged through App Store Connect.',
   );
+const { version } = JSON.parse(readFileSync(path.join(root, 'manifest.json'), 'utf8'));
 execFileSync(
   'xcrun',
   [
@@ -37,13 +38,13 @@ const generatedAppId = 'com.example.' + appName.replaceAll(' ', '-');
 const replacement = `PRODUCT_BUNDLE_IDENTIFIER = ${bundleIdentifier};`;
 const config = readFileSync(project, 'utf8')
   .replaceAll(`PRODUCT_BUNDLE_IDENTIFIER = "${generatedAppId}";`, replacement)
-  .replaceAll(`PRODUCT_BUNDLE_IDENTIFIER = ${generatedAppId};`, replacement);
+  .replaceAll(`PRODUCT_BUNDLE_IDENTIFIER = ${generatedAppId};`, replacement)
+  .replaceAll(/MARKETING_VERSION = [^;]+;/g, `MARKETING_VERSION = ${version};`);
 writeFileSync(project, config);
 console.log(
   'Safari Xcode project generated under safari/. Change the bundle identifier and configure signing before distribution.',
 );
 
-const { version } = JSON.parse(readFileSync(path.join(root, 'manifest.json'), 'utf8'));
 await archiveDirectory(
   path.join(root, 'safari', appName),
   path.join(root, 'releases', `${EDITION.slug}-safari-xcode-${version}.zip`),

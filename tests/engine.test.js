@@ -1,8 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { scan, redact, restore } from '../src/core/redaction.js';
+import { scan, redact, restore, restoreResponse } from '../src/core/redaction.js';
 import { DEFAULT_POLICY, validatePolicy } from '../src/core/policy.js';
-import { MAX_FINDINGS } from '../src/core/limits.js';
+import { MAX_FINDINGS, MAX_SCAN_LENGTH } from '../src/core/limits.js';
 const policy = {
   ...DEFAULT_POLICY,
   sensitiveTerms: ['Jane Smith', 'Acme (private)'],
@@ -47,6 +47,49 @@ test('restoration does not recursively interpret recovered values', () => {
       '[[LG_b_PRIVATE_2]]': 'secret',
     }),
     '[[LG_b_PRIVATE_2]]',
+  );
+});
+test('pasted response restores repeated values and reports unknown session tokens', () => {
+  const token = '[[LG_current_PERSON_1]]';
+  const unknown = '[[LG_other_PERSON_1]]';
+  const original = 'Иван Примеров 🧑';
+  assert.deepEqual(
+    restoreResponse(`**${token}**\nAgain: ${token}\nUnchanged: ${unknown}`, { [token]: original }),
+    {
+      text: `**${original}**\nAgain: ${original}\nUnchanged: ${unknown}`,
+      restoredCount: 2,
+      unresolvedCount: 1,
+    },
+  );
+  assert.deepEqual(restoreResponse('An ordinary answer.', {}), {
+    text: 'An ordinary answer.',
+    restoredCount: 0,
+    unresolvedCount: 0,
+  });
+});
+test('restoration rejects nontext responses and oversized input without disclosing values', () => {
+  for (const input of [null, 42, {}, ['answer']])
+    assert.throws(() => restoreResponse(input, {}), /must be text/);
+  assert.throws(
+    () => restoreResponse('x'.repeat(MAX_SCAN_LENGTH + 1), {}),
+    /local restoration limit/,
+  );
+  assert.equal(restoreResponse('x'.repeat(MAX_SCAN_LENGTH), {}).text.length, MAX_SCAN_LENGTH);
+});
+test('restoration bounds repeated expansion and trailing prose before constructing output', () => {
+  const token = '[[LG_current_PRIVATE_1]]';
+  const value = 'SYNTHETIC_PRIVATE_'.repeat(600);
+  assert.throws(
+    () => restoreResponse(token.repeat(200), { [token]: value }),
+    (error) => /local restoration limit/.test(error.message) && !error.message.includes(value),
+  );
+  assert.throws(
+    () => restoreResponse(token + 'x'.repeat(MAX_SCAN_LENGTH - token.length), { [token]: value }),
+    /local restoration limit/,
+  );
+  assert.equal(
+    restoreResponse(token, { [token]: 'x'.repeat(MAX_SCAN_LENGTH) }).text.length,
+    MAX_SCAN_LENGTH,
   );
 });
 test('handles overlaps and detects API credentials', () => {

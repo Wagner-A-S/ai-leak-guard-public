@@ -1,10 +1,12 @@
 # Privacy notice draft — AI Leak Guard Public
 
-This is publication copy describing version 0.1.0. Before hosting or submitting it, identify the actual publisher, privacy/support contact and publication date. A public hosted privacy-policy URL remains a browser-store release requirement. Security reports use GitHub private vulnerability reporting, linked in `SECURITY.md`.
+This is publication copy describing version 0.1.1. Before hosting or submitting it, identify the actual publisher, privacy/support contact and publication date. A public hosted privacy-policy URL remains a browser-store release requirement. Security reports use GitHub private vulnerability reporting, linked in `SECURITY.md`.
 
 ## Local processing
 
 The extension checks text locally. Original drafts, detected values and placeholder maps are not sent to a scanning service or maintainer. The restoration vault exists only in memory and is erased by session clear or loss of the private workspace session. Prompt/vault content is not persisted to extension settings or synchronized through browser sync.
+
+AI answers you paste into the workspace are restored locally using exact placeholders from the current session. Selecting **Copy restored response** explicitly writes the restored result, including original values, to your operating system's clipboard. The extension does not use clipboard-read access or automatically insert restored originals into provider pages.
 
 Personal detection settings and custom literal terms are stored in browser extension settings. Provider access is limited to the curated exact hosts. Installed company-managed policy is unsupported and causes activation to block. The HTTP development preview uses its own separate local settings store and cannot send to provider tabs. Literal custom terms may themselves be sensitive; treat access to that browser profile and its settings appropriately.
 

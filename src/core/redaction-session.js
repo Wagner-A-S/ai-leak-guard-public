@@ -1,4 +1,4 @@
-import { redact, restore } from './redaction.js';
+import { redact, restore, restoreResponse } from './redaction.js';
 // Originals never leave this object. A new session requires a new nonce.
 export class RedactionSession {
   #vault = Object.create(null);
@@ -19,6 +19,10 @@ export class RedactionSession {
   restore(text) {
     this.#check();
     return restore(text, this.#vault);
+  }
+  restoreResponse(text) {
+    this.#check();
+    return restoreResponse(text, this.#vault);
   }
   dispose() {
     this.#vault = Object.create(null);

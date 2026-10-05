@@ -424,8 +424,35 @@ export function redact(text, policy, vault, nonce) {
 
 /** Restore known session tokens exactly once inside a trusted private surface. */
 export function restore(text, vault) {
+  return restoreResponse(text, vault).text;
+}
+
+/** Return restoration counts without exposing the private mapping. */
+export function restoreResponse(text, vault) {
+  if (typeof text !== 'string') throw new Error('The AI response must be text.');
+  const limitMessage = `Response exceeds the local restoration limit of ${MAX_SCAN_LENGTH.toLocaleString('en-US')} characters. Restore a shorter section.`;
+  if (text.length > MAX_SCAN_LENGTH) throw new Error(limitMessage);
+  const chunks = [];
+  let offset = 0,
+    outputLength = 0,
+    restoredCount = 0,
+    unresolvedCount = 0;
   // Single pass: recovered values cannot cause recursive token substitution.
-  return text.replace(/\[\[LG_[a-zA-Z0-9_-]+\]\]/g, (token) =>
-    Object.hasOwn(vault, token) ? vault[token] : token,
-  );
+  for (const match of text.matchAll(/\[\[LG_[a-zA-Z0-9_-]+\]\]/g)) {
+    const token = match[0];
+    const known = Object.hasOwn(vault, token);
+    const value = known ? vault[token] : token;
+    if (typeof value !== 'string') throw new Error('The private restoration mapping is invalid.');
+    outputLength += match.index - offset + value.length;
+    // Check expansion before appending a private value or allocating the joined result.
+    if (outputLength > MAX_SCAN_LENGTH) throw new Error(limitMessage);
+    chunks.push(text.slice(offset, match.index), value);
+    offset = match.index + token.length;
+    if (known) restoredCount++;
+    else unresolvedCount++;
+  }
+  outputLength += text.length - offset;
+  if (outputLength > MAX_SCAN_LENGTH) throw new Error(limitMessage);
+  chunks.push(text.slice(offset));
+  return { text: chunks.join(''), restoredCount, unresolvedCount };
 }

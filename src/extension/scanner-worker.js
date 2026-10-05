@@ -9,7 +9,7 @@ self.onmessage = ({ data }) => {
       const findings = result.findings.map(({ value, ...finding }) => finding);
       self.postMessage({ id: data.id, result: { ...result, findings } });
     } else if (data.type === 'restore')
-      self.postMessage({ id: data.id, text: session.restore(data.text) });
+      self.postMessage({ id: data.id, ...session.restoreResponse(data.text) });
     else throw new Error('Unsupported scanner operation.');
   } catch (error) {
     self.postMessage({ id: data.id, error: error.message });

@@ -8,6 +8,8 @@ Summary: Review sensitive text locally before sending to configured AI websites.
 
 AI Leak Guard Public is an MIT-licensed extension with a private workspace for preparing AI prompts. Check supported phone, contact, identity, payment and credential shapes locally; review the sanitized preview; send placeholders to a configured AI page. Known placeholders are restored only in the extension's private response view.
 
+You can also paste a copied AI answer into the workspace, restore exact placeholders from the current session and explicitly copy the restored response to your clipboard. Keep the original workspace open: closing, refreshing or clearing it loses the private restoration map. Unknown or changed placeholders cannot be restored, and the extension never inserts original values into the AI website.
+
 Choose detection categories and the local phone region, and add personal literal redaction/block terms. The edition uses a curated provider list without arbitrary host or advanced enterprise policy configuration. Phone regions and sample filters use searchable modals. Guarded native sends and unsupported direct uploads open a notice guiding you to the workspace. Original values and the restoration map stay local in memory, without a scanning backend or telemetry.
 
 Text imports support TXT, CSV, Markdown and JSON. Review every preview for sensitive facts that rules may miss. Thirty configured services are a catalog, not a promise of thirty authenticated live integrations or complete data-loss prevention. Provider scripts can read originals pasted into their page before a send; use the private workspace first. Documents/images/audio, native apps, API traffic, unconfigured sites and arbitrary page-script networking are outside the tested scope.

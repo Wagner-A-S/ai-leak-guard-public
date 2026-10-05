@@ -243,8 +243,8 @@
           <section class="card response-card">
             <div class="card-title">
               <div>
-                <div class="eyebrow small">THE COMPLETE PICTURE</div>
-                <h2>Privately restored response</h2>
+                <div class="eyebrow small">BRING YOUR DETAILS BACK</div>
+                <h2>Restore an AI response</h2>
               </div>
               <button class="button secondary" id="read">
                 Refresh response
@@ -261,8 +261,43 @@
                 </svg>
               </button>
             </div>
-            <pre id="response" class="response-output">
+            <p class="response-intro">
+              Paste the AI’s reply below. The placeholders from this private session become their
+              original values on your device.
+            </p>
+            <div class="response-grid">
+              <div class="response-pane">
+                <label class="response-label" for="ai-response">AI response</label>
+                <textarea
+                  id="ai-response"
+                  class="response-input"
+                  placeholder="Paste the AI response containing [[LG_…]] placeholders…"
+                  aria-describedby="response-input-note"
+                  spellcheck="false"
+                ></textarea>
+                <small id="response-input-note" class="response-help"
+                  >Use the workspace that redacted your message. Clearing the session, reloading
+                  this workspace or closing it removes the originals.</small
+                >
+                <button class="button primary" id="restore-response" disabled>
+                  Restore pasted response
+                </button>
+              </div>
+              <div class="response-pane restored-pane">
+                <div class="response-output-heading">
+                  <h3 id="response-heading">Your restored response</h3>
+                  <span class="subtle-badge">PRIVATE</span>
+                </div>
+                <pre id="response" class="response-output" aria-labelledby="response-heading">
 Your response will appear here. Original values are restored only in this private view.</pre>
+                <button class="button secondary" id="copy-response" disabled>
+                  Copy restored response
+                </button>
+              </div>
+            </div>
+            <div id="response-status" class="response-status" role="status" aria-live="polite">
+              Paste a reply or refresh the connected provider’s response.
+            </div>
             <div class="response-note">
               <svg
                 viewBox="0 0 24 24"

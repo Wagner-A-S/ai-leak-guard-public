@@ -229,12 +229,41 @@ api.storage.onChanged.addListener((changes, area) => {
   }
 });
 
-async function openWorkspace(tab, handoffId) {
+async function focusWorkspace(tabId) {
+  if (
+    typeof api.runtime.sendMessage !== 'function' ||
+    typeof api.tabs.update !== 'function' ||
+    typeof api.windows?.update !== 'function'
+  )
+    return false;
+  try {
+    // Extension pages answer live, so worker restarts do not lose their private
+    // session. Discovery carries browser identities only, never draft or vault data.
+    const existing = await deadline(PROBE_TIMEOUT_MS).run(() =>
+      api.runtime.sendMessage({ type: 'locate-workspace', tabId }),
+    );
+    if (
+      existing?.tabId !== tabId ||
+      !validTabId(existing.workspaceTabId) ||
+      existing.workspaceTabId === tabId ||
+      !validTabId(existing.windowId)
+    )
+      return false;
+    const budget = deadline(ACTIVATION_TIMEOUT_MS);
+    await budget.run(() => api.tabs.update(existing.workspaceTabId, { active: true }));
+    await budget.run(() => api.windows.update(existing.windowId, { focused: true }));
+    return true;
+  } catch {
+    return false; // Closed pages and unavailable APIs fall back to a fresh workspace.
+  }
+}
+async function openWorkspace(tab, handoffId, reuse = false) {
   if (!validTabId(tab?.id)) return;
   // Repair pre-existing tabs before opening the UI; the UI verifies health again.
   try {
     await ensureGuard(tab.id);
   } catch {}
+  if (reuse && (await focusWorkspace(tab.id))) return;
   const query = new URLSearchParams({ tab: String(tab.id) });
   if (handoffId) query.set('draft', handoffId.toLowerCase());
   const url = api.runtime.getURL(`src/ui/workspace.html?${query}`);
@@ -245,7 +274,17 @@ async function openWorkspace(tab, handoffId) {
     await api.tabs.create({ url });
   }
 }
-api.action.onClicked.addListener((tab) => openWorkspace(tab));
+const toolbarWorkspaces = new Map();
+api.action.onClicked.addListener((tab) => {
+  if (!validTabId(tab?.id)) return;
+  const current = toolbarWorkspaces.get(tab.id);
+  if (current) return current;
+  const operation = openWorkspace(tab, undefined, true).finally(() => {
+    if (toolbarWorkspaces.get(tab.id) === operation) toolbarWorkspaces.delete(tab.id);
+  });
+  toolbarWorkspaces.set(tab.id, operation);
+  return operation;
+});
 function requestingHost(sender) {
   return sender?.id === api.runtime.id && validTabId(sender.tab?.id) ? hostOf(sender.url) : null;
 }

@@ -68,6 +68,30 @@ test('Chromium extension sends only sanitized text and restores privately', asyn
     expect(
       await provider.getByRole('article', { name: 'Assistant response' }).textContent(),
     ).toEqual(remote);
+    // Paste a copied AI answer into the real extension, keeping restoration private.
+    const replyTokens = remote.match(/\[\[LG_[A-Za-z0-9_-]+\]\]/g);
+    expect(replyTokens).toHaveLength(2);
+    const pasted = `Copied AI answer:\nEmail: ${replyTokens[0]}\nPhone: ${replyTokens[1]}\n[[LG_unknown_EMAIL_999]]`;
+    await workspace.getByLabel('AI response', { exact: true }).fill(pasted);
+    await workspace.getByRole('button', { name: 'Restore pasted response' }).click();
+    await expect(workspace.locator('#response')).toHaveText(
+      `Copied AI answer:\n${original}\n[[LG_unknown_EMAIL_999]]`,
+    );
+    await expect(workspace.getByRole('button', { name: 'Copy restored response' })).toBeEnabled();
+    await expect(workspace.locator('#response-status')).toContainText(
+      '1 unrecognized placeholder kept unchanged',
+    );
+    const foundWorkspace = await worker.evaluate(
+      (tabId) => chrome.runtime.sendMessage({ type: 'locate-workspace', tabId }),
+      tabId,
+    );
+    expect(foundWorkspace.tabId).toBe(tabId);
+    expect(Number.isInteger(foundWorkspace.workspaceTabId)).toBe(true);
+    expect(foundWorkspace.workspaceTabId).not.toBe(tabId);
+    expect(Number.isInteger(foundWorkspace.windowId)).toBe(true);
+    expect(
+      await provider.getByRole('article', { name: 'Assistant response' }).textContent(),
+    ).toEqual(remote);
     // A cleared vault must never reinterpret an old provider token as new data.
     await workspace.locator('#clear').click();
     await workspace.locator('#draft').fill('Email: bob@example.com');

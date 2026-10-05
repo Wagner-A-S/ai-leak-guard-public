@@ -19,12 +19,77 @@ let busy = false,
   policyLoad = 0,
   watchTimer,
   watchUntil = 0,
-  responseEpoch = 0;
+  responseEpoch = 0,
+  sessionEpoch = 0,
+  responseSource = 'provider',
+  restoringResponse = false,
+  restoredResponse = null;
+const responseStatus = (message, error = false) => {
+  $('response-status').textContent = message;
+  $('response-status').classList.toggle('error', error);
+};
+function updateRestoreAction() {
+  const length = $('ai-response').value.length;
+  $('restore-response').disabled =
+    !length || length > MAX_SCAN_LENGTH || restoringResponse || scanner.failed;
+}
+function stopFollowingResponse() {
+  clearTimeout(watchTimer);
+  watchUntil = 0;
+}
+function clearRestoredResponse(message) {
+  restoredResponse = null;
+  $('response').textContent = message;
+  $('copy-response').disabled = true;
+}
+function showRestoredResponse(result) {
+  restoredResponse = result.text;
+  $('response').textContent = result.text || 'Waiting for the provider response…';
+  $('copy-response').disabled = !result.text;
+  const { restoredCount, unresolvedCount } = result;
+  if (Number.isInteger(restoredCount) && Number.isInteger(unresolvedCount)) {
+    responseStatus(
+      `${restoredCount.toLocaleString()} private value${restoredCount === 1 ? '' : 's'} restored locally.${unresolvedCount ? ` ${unresolvedCount.toLocaleString()} unrecognized placeholder${unresolvedCount === 1 ? '' : 's'} kept unchanged. Use the same open workspace that checked your original message.` : restoredCount ? '' : ' No matching placeholders were found. Check your original message in this workspace first.'}`,
+    );
+  } else {
+    responseStatus(
+      'Response restored locally. Only placeholders saved in this open workspace can be restored; others stay unchanged.',
+    );
+  }
+}
 const status = (message, error = false) => {
   $('status').textContent = message;
   $('status').classList.toggle('error', error);
   $('detail-operation').textContent = message;
 };
+if (isExtension && api.runtime.onMessage) {
+  api.runtime.onMessage.addListener((message, sender, respond) => {
+    // Only our background may discover this live workspace; provider pages never get access.
+    if (
+      message?.type !== 'locate-workspace' ||
+      sender.id !== api.runtime.id ||
+      sender.tab ||
+      !Number.isInteger(tab) ||
+      tab < 0 ||
+      message.tabId !== tab
+    )
+      return;
+    api.tabs
+      .getCurrent()
+      .then((current) => {
+        if (
+          Number.isInteger(current?.id) &&
+          current.id >= 0 &&
+          Number.isInteger(current.windowId) &&
+          current.windowId >= 0
+        )
+          respond({ tabId: tab, workspaceTabId: current.id, windowId: current.windowId });
+        else respond();
+      })
+      .catch(() => respond());
+    return true;
+  });
+}
 $('detail-version').textContent = EXTENSION_VERSION;
 const stateLabels = {
   ready: 'Ready',
@@ -201,6 +266,9 @@ $('scan').onclick = async () => {
     busy = false;
     $('scan').disabled = !controller.policy || scanner.failed;
     $('scan').textContent = 'Check & redact';
+    updateRestoreAction();
+    if (scanner.failed)
+      responseStatus('Local scanner unavailable. Clear the session to restart.', true);
   }
 };
 $('file').onchange = async () => {
@@ -259,7 +327,15 @@ $('send').onclick = async () => {
   }
 };
 async function readResponse(quiet = false) {
-  const epoch = responseEpoch;
+  if (quiet && responseSource !== 'provider') return;
+  const epoch = ++responseEpoch;
+  if (!quiet) {
+    responseSource = 'provider';
+    restoringResponse = false;
+    updateRestoreAction();
+    clearRestoredResponse('Reading the connected provider’s response…');
+    responseStatus('Reading the connected provider’s response…');
+  }
   try {
     if (tab === null)
       throw new Error('Open the extension from the provider tab to read its response.');
@@ -268,30 +344,106 @@ async function readResponse(quiet = false) {
     if (epoch !== responseEpoch) return;
     const restored = await scanner.restore(result.text);
     if (epoch !== responseEpoch) return;
-    $('response').textContent = restored.text || 'Waiting for the provider response…';
+    showRestoredResponse(restored);
   } catch (error) {
-    if (!quiet) status(error.message, true);
+    if (epoch !== responseEpoch) return;
+    updateRestoreAction();
+    if (scanner.failed)
+      responseStatus('Local scanner unavailable. Clear the session to restart.', true);
+    if (!quiet) {
+      status(error.message, true);
+      responseStatus(error.message, true);
+    }
   }
 }
 function followResponse() {
   clearTimeout(watchTimer);
-  if (Date.now() > watchUntil) return;
+  if (responseSource !== 'provider' || Date.now() > watchUntil) return;
   watchTimer = setTimeout(async () => {
     await readResponse(true);
     followResponse();
   }, 1500);
 }
 $('read').onclick = () => readResponse();
+$('ai-response').addEventListener('input', () => {
+  responseEpoch++;
+  responseSource = 'manual';
+  restoringResponse = false;
+  stopFollowingResponse();
+  clearRestoredResponse('Your restored response will appear here after you restore this reply.');
+  updateRestoreAction();
+  const length = $('ai-response').value.length;
+  responseStatus(
+    scanner.failed
+      ? 'Local scanner unavailable. Clear the session to restart.'
+      : length > MAX_SCAN_LENGTH
+        ? `This response exceeds the local limit of ${MAX_SCAN_LENGTH.toLocaleString()} characters. Split it into smaller parts.`
+        : length
+          ? 'Ready to restore locally. Your pasted response stays in this workspace.'
+          : 'Paste the AI response to restore its placeholders.',
+    scanner.failed || length > MAX_SCAN_LENGTH,
+  );
+});
+$('restore-response').onclick = async () => {
+  const text = $('ai-response').value;
+  if (!text || restoringResponse || text.length > MAX_SCAN_LENGTH || scanner.failed) return;
+  const epoch = ++responseEpoch;
+  responseSource = 'manual';
+  stopFollowingResponse();
+  restoringResponse = true;
+  updateRestoreAction();
+  clearRestoredResponse('Restoring your response locally…');
+  responseStatus('Restoring your response locally…');
+  try {
+    const result = await scanner.restore(text);
+    if (epoch !== responseEpoch || text !== $('ai-response').value) return;
+    showRestoredResponse(result);
+  } catch (error) {
+    if (epoch !== responseEpoch) return;
+    responseStatus(error.message, true);
+  } finally {
+    if (epoch === responseEpoch) {
+      restoringResponse = false;
+      updateRestoreAction();
+    }
+  }
+};
+$('copy-response').onclick = async () => {
+  const text = restoredResponse;
+  if (!text) return;
+  const epoch = responseEpoch;
+  $('copy-response').disabled = true;
+  try {
+    if (!navigator.clipboard?.writeText)
+      throw new Error('Clipboard access is unavailable. Select the restored text and copy it.');
+    await navigator.clipboard.writeText(text);
+    if (epoch !== responseEpoch || restoredResponse !== text) return;
+    responseStatus('Restored response copied. Paste it into your document or message.');
+  } catch {
+    if (epoch !== responseEpoch || restoredResponse !== text) return;
+    responseStatus('Clipboard access was denied. Select the restored text and copy it.', true);
+  } finally {
+    if (epoch === responseEpoch && restoredResponse === text) $('copy-response').disabled = false;
+  }
+};
 $('clear').onclick = () => {
   responseEpoch++;
-  clearTimeout(watchTimer);
-  watchUntil = 0;
+  sessionEpoch++;
+  stopFollowingResponse();
+  responseSource = 'provider';
+  restoringResponse = false;
+  $('ai-response').value = '';
   invalidate();
   scanner.reset();
   $('draft').value = '';
   resetPreview();
-  $('response').textContent =
-    'Private values cleared. New responses can only restore placeholders from this session.';
+  clearRestoredResponse(
+    'Private values cleared. New responses can only restore placeholders from this session.',
+  );
+  updateRestoreAction();
+  responseStatus(
+    'Private values cleared. Check a new original message before restoring its reply.',
+  );
   $('scan').disabled = !controller.policy || busy;
   status('Private session cleared.');
 };
@@ -315,10 +467,10 @@ window.addEventListener('pagehide', () => {
 });
 await init();
 if (parameters.has('draft') && isExtension) {
-  const epoch = responseEpoch;
+  const epoch = sessionEpoch;
   try {
     const text = await importBlockedDraft(api, tab, parameters.get('draft'));
-    if (epoch !== responseEpoch) {
+    if (epoch !== sessionEpoch) {
       status(
         'The session was cleared during draft transfer. Open the workspace from the page again.',
         true,

@@ -1,6 +1,6 @@
 # AI Leak Guard Public — notices
 
-Version 0.1.0 is open-source software under the MIT license in `LICENSE`. The requested repository/package spelling `ai-leak-guard-public` is preserved. Source is maintained at https://github.com/Wagner-A-S/ai-leak-guard-public. Browser-store listing and signed distribution are separate release steps.
+Version 0.1.1 is open-source software under the MIT license in `LICENSE`. The requested repository/package spelling `ai-leak-guard-public` is preserved. Source is maintained at https://github.com/Wagner-A-S/ai-leak-guard-public. Browser-store listing and signed distribution are separate release steps.
 
 The local scanner and memory-only restoration vault do not use a remote scanning backend or telemetry. Reviewed sanitized text is sent only through a separately authorized handoff. The detector can miss sensitive content. Use the private workspace for originals and review every preview; provider scripts can read text entered into their page before any send action.
 
